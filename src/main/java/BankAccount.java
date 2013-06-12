@@ -25,7 +25,10 @@ public class BankAccount {
     }
 
     public static BankAccountDTO depositAccount(String accountNumber, double amount, String des) {
-        return null;
+        BankAccountDTO account = BankAccount.getAccountNumber(accountNumber);
+        account.setBalance(amount);
+        bankAccountDAO.save(account);
+        return account;
         //To change body of created methods use File | Settings | File Templates.
     }
 }
