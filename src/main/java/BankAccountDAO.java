@@ -6,7 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 public class BankAccountDAO {
-    public void save(BankAccountDTO capture) {
+    public boolean save(BankAccountDTO capture) {
+        return true;
         //To change body of created methods use File | Settings | File Templates.
     }
 }

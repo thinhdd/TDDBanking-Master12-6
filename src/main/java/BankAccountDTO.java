@@ -6,11 +6,24 @@
  * To change this template use File | Settings | File Templates.
  */
 public class BankAccountDTO {
-    public String getBalace() {
-        return null;  //To change body of created methods use File | Settings | File Templates.
+    private String accountNumber;
+    private double balance;
+    BankAccountDTO(String accountNumber){
+        this.accountNumber=accountNumber;
+    };
+    public double getBalace() {
+        return this.balance;  //To change body of created methods use File | Settings | File Templates.
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     public String getAccountNumber() {
-        return null;  //To change body of created methods use File | Settings | File Templates.
+        return this.accountNumber;  //To change body of created methods use File | Settings | File Templates.
     }
 }
