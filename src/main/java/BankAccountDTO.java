@@ -6,17 +6,13 @@
  * To change this template use File | Settings | File Templates.
  */
 public class BankAccountDTO {
-    private String accountNumber;
+    private final String accountNumber;
     private double balance;
     BankAccountDTO(String accountNumber){
         this.accountNumber=accountNumber;
     };
     public double getBalace() {
         return this.balance;  //To change body of created methods use File | Settings | File Templates.
-    }
-
-    public void setAccountNumber(String accountNumber) {
-        this.accountNumber = accountNumber;
     }
 
     public void setBalance(double balance) {

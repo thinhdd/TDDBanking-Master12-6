@@ -6,12 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 public class BankAccountDAO {
-    public boolean save(BankAccountDTO capture) {
-        return true;
+    public BankAccountDTO save(BankAccountDTO capture) {
+        return null;
         //To change body of created methods use File | Settings | File Templates.
     }
 
-    public static BankAccountDTO getAccount(String accountNumber) {
+    public BankAccountDTO getAccount(String accountNumber) {
         return null;  //To change body of created methods use File | Settings | File Templates.
     }
 }

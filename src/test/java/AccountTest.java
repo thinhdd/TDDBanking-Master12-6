@@ -30,14 +30,15 @@ public class AccountTest {
         assertEquals(ac.getValue().getAccountNumber(), accountNumber);
     }
     @Test
-    public void testGetAccount(){
-        BankAccountDTO account = BankAccount.openAccount(accountNumber);
-        ArgumentCaptor<BankAccountDTO> ac = ArgumentCaptor.forClass(BankAccountDTO.class);
-        when(BankAccountDAO.getAccount(accountNumber)).thenReturn(account);
-        BankAccount bankAccount = new BankAccount();
+    public void testGetAccount()
+    {
+        BankAccountDTO accountOpen = BankAccount.openAccount(accountNumber);
+
+        when(mockBAD.getAccount(accountNumber)).thenReturn(accountOpen);
+        BankAccountDTO accountResult = BankAccount.getAccountNumber(accountNumber);
         verify(mockBAD).getAccount(accountNumber);
-        assertEquals(bankAccount.getAccountNumber(accountNumber), accountNumber);
-        assertEquals(bankAccount.getAccountNumber(accountNumber).getBalace(), 0.0, 0.01);
+        assertEquals(accountResult.getAccountNumber(), accountNumber);
+        assertEquals(accountResult.getBalace(), 0.0, 0.01);
     }
 
 }
