@@ -32,4 +32,8 @@ public class BankAccount {
         return account;
         //To change body of created methods use File | Settings | File Templates.
     }
+
+    public static void withDrawAccount(String accountNumber, double amount, String des) {
+        //To change body of created methods use File | Settings | File Templates.
+    }
 }
