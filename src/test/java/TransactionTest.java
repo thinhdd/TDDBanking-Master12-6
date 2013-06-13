@@ -76,14 +76,17 @@ public class TransactionTest {
     {
         ArgumentCaptor<TransactionDTO> act = ArgumentCaptor.forClass(TransactionDTO.class);
 
-        BankAccountDTO account = BankAccount.openAccount(accountNumber);
+
         Calendar calendar = mock(Calendar.class);
         TransactionDTO.setCalendar(calendar);
+        BankAccountDTO account = BankAccount.openAccount(accountNumber);
         when(calendar.getTimeInMillis()).thenReturn(100000l);
         when(mockBAD.getAccount(accountNumber)).thenReturn(account);
         BankAccount.withDrawAccount(accountNumber, 100, "Rut 100k");
         verify(mockTD,times(1)).save(act.capture());
         List<TransactionDTO> list = act.getAllValues();
+
+        //----------------------------------------------------------
         assertEquals(list.get(0).getAccountNumber(), accountNumber);
         assertEquals(list.get(0).getBalance(), 100.0);
         assertEquals(list.get(0).getDescriber(),"Rut 100k");
@@ -94,7 +97,7 @@ public class TransactionTest {
         BankAccountDTO account = BankAccount.openAccount(accountNumber);
         Calendar calendar = mock(Calendar.class);
         TransactionDTO.setCalendar(calendar);
-        when(calendar.getTimeInMillis()).thenReturn(100000l);
+        when(calendar.getTimeInMillis()).thenReturn(1000l).thenReturn(1009l).thenReturn(1100l);
         when(mockBAD.getAccount(accountNumber)).thenReturn(account);
         BankAccount.withDrawAccount(accountNumber, 100, "Rut 100k");
         BankAccount.depositAccount(accountNumber, 100, "Them 100k");
@@ -115,5 +118,29 @@ public class TransactionTest {
         assertTrue(list.get(1).equals(listDB.get(1)));
         //-----------Check Transaction 1-------------
         assertTrue(list.get(2).equals(listDB.get(2)));
+    }
+    @Test
+    public void getListTransactionOnTime()
+    {
+        ArgumentCaptor<TransactionDTO> act = ArgumentCaptor.forClass(TransactionDTO.class);
+        transactionCreate();
+        verify(mockTD,times(3)).save(act.capture());
+        List<TransactionDTO> list = act.getAllValues();
+        list=list.subList(0,2);
+        when(mockTD.getListTransaction(accountNumber, 1000l, 1009l)).thenReturn(list);
+        List<TransactionDTO> listDB= BankAccount.getListTransaction(accountNumber,1000l, 1009l);
+        assertTrue(listDB.equals(list));
+    }
+    @Test
+    public void getListTransactionOnLimit()
+    {
+        ArgumentCaptor<TransactionDTO> act = ArgumentCaptor.forClass(TransactionDTO.class);
+        transactionCreate();
+        verify(mockTD,times(3)).save(act.capture());
+        List<TransactionDTO> list = act.getAllValues();
+        list=list.subList(0,2);
+        when(mockTD.getListTransaction(accountNumber, 2)).thenReturn(list);
+        List<TransactionDTO> listDB= BankAccount.getListTransaction(accountNumber,2);
+        assertTrue(listDB.equals(list));
     }
 }

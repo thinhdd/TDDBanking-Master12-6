@@ -16,4 +16,11 @@ public class TransactionDAO {
     public List<TransactionDTO> getListTransaction(String accountNumber) {
         return null;  //To change body of created methods use File | Settings | File Templates.
     }
+    public List<TransactionDTO> getListTransaction(String accountNumber, long start, long end) {
+        return null;  //To change body of created methods use File | Settings | File Templates.
+    }
+
+    public List<TransactionDTO> getListTransaction(String accountNumber, int count) {
+        return null;  //To change body of created methods use File | Settings | File Templates.
+    }
 }

@@ -48,4 +48,13 @@ public class BankAccount {
     public static List<TransactionDTO> getListTransaction(String accountNumber) {
         return Transaction.getListTransaction(accountNumber);  //To change body of created methods use File | Settings | File Templates.
     }
+
+    public static List<TransactionDTO> getListTransaction(String accountNumber, long timeStart, long timeEnd) {
+        //To change body of created methods use File | Settings | File Templates.
+        return Transaction.getListTransaction(accountNumber,timeStart,timeEnd);
+    }
+
+    public static List<TransactionDTO> getListTransaction(String accountNumber, int count) {
+        return Transaction.getListTransaction(accountNumber,count);  //To change body of created methods use File | Settings | File Templates.
+    }
 }
