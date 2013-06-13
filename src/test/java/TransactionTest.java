@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -87,5 +88,29 @@ public class TransactionTest {
         assertEquals(list.get(0).getBalance(),100.0);
         assertEquals(list.get(0).getDescriber(),"Rut 100k");
         assertEquals(list.get(0).getTimeStamp(), 100000l);
+    }
+    @Test
+    public void getListTransactionOneAccountTest()
+    {
+        ArgumentCaptor<TransactionDTO> act = ArgumentCaptor.forClass(TransactionDTO.class);
+
+        BankAccountDTO account = BankAccount.openAccount(accountNumber);
+        Calendar calendar = mock(Calendar.class);
+        TransactionDTO.setCalendar(calendar);
+        when(calendar.getTimeInMillis()).thenReturn(100000l);
+        when(mockBAD.getAccount(accountNumber)).thenReturn(account);
+        BankAccount.withDrawAccount(accountNumber, 100, "Rut 100k");
+        BankAccount.depositAccount(accountNumber, 100, "Them 100k");
+        BankAccount.withDrawAccount(accountNumber, 100, "Rut 100k");
+
+        verify(mockTD,times(3)).save(act.capture());
+        List<TransactionDTO> list = act.getAllValues();
+        when(mockTD.getListTransaction(accountNumber)).thenReturn(list);
+        List<TransactionDTO> listDB= BankAccount.getListTransaction(accountNumber);
+        //-----------Check Transaction 1-------------
+        assertTrue(list.get(0).equals(listDB.get(0)));
+        assertTrue(list.get(1).equals(listDB.get(1)));
+        assertTrue(list.get(2).equals(listDB.get(2)));
+
     }
 }

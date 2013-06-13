@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: thinhdd
@@ -15,5 +17,9 @@ public class Transaction {
     public static void setTransactionDAO(TransactionDAO mockTD) {
         transactionDAO=mockTD;
         //To change body of created methods use File | Settings | File Templates.
+    }
+
+    public static List<TransactionDTO> getListTransaction(String accountNumber) {
+        return transactionDAO.getListTransaction(accountNumber);  //To change body of created methods use File | Settings | File Templates.
     }
 }

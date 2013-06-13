@@ -1,3 +1,5 @@
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: thinhdd
@@ -25,19 +27,25 @@ public class BankAccount {
     }
 
     public static void depositAccount(String accountNumber, double amount, String des) {
-        transactionCenter(accountNumber,amount,des);
+        BankAccountDTO account = BankAccount.getAccountNumber(accountNumber);
+        transactionCenter(accountNumber,amount,des, account);
         //To change body of created methods use File | Settings | File Templates.
     }
 
     public static void withDrawAccount(String accountNumber, double amount, String des) {
-        transactionCenter(accountNumber,-amount,des);
+        BankAccountDTO account = BankAccount.getAccountNumber(accountNumber);
+        if (account.getBalace()>=amount)
+            transactionCenter(accountNumber,-amount,des, account);
         //To change body of created methods use File | Settings | File Templates.
     }
-    public static BankAccountDTO transactionCenter(String accountNumber, double amount, String des){
-        BankAccountDTO account = BankAccount.getAccountNumber(accountNumber);
+    public static BankAccountDTO transactionCenter(String accountNumber, double amount, String des, BankAccountDTO account){
         account.setBalance(amount);
         Transaction.createTransactionDTO(accountNumber,amount,des);
         bankAccountDAO.save(account);
         return account;
+    }
+
+    public static List<TransactionDTO> getListTransaction(String accountNumber) {
+        return Transaction.getListTransaction(accountNumber);  //To change body of created methods use File | Settings | File Templates.
     }
 }

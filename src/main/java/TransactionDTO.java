@@ -47,4 +47,9 @@ public class TransactionDTO {
         calendar=calendars;
         //To change body of created methods use File | Settings | File Templates.
     }
+    public boolean equals(Object otherTransaction) {
+        TransactionDTO other = (TransactionDTO)otherTransaction;
+        return accountNumber.equals(other.accountNumber) && ((amount - other.amount) == 0) && des.equals(other.des) && (timeStamp==other.timeStamp)
+                && (state && other.state);
+    }
 }
