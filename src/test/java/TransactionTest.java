@@ -38,7 +38,7 @@ public class TransactionTest {
 
         verify(mockBAD, times(2)).save(ac.capture());
         List<BankAccountDTO> list = ac.getAllValues();
-        assertEquals(list.get(1).getBalace(), 100.0 , 0.01);
+        assertEquals(list.get(1).getBalace(), 200.0 , 0.01);
         assertEquals(list.get(1).getAccountNumber(), accountNumber);
     }
     @Test
@@ -65,11 +65,9 @@ public class TransactionTest {
         ArgumentCaptor<BankAccountDTO> ac = ArgumentCaptor.forClass(BankAccountDTO.class);
         BankAccountDTO account = BankAccount.openAccount(accountNumber);
         when(mockBAD.getAccount(accountNumber)).thenReturn(account);
-        BankAccount.depositAccount(accountNumber, 100, "Them 100k");
-        when(mockBAD.getAccount(accountNumber)).thenReturn(account);
-        BankAccount.withDrawAccount(accountNumber,-50, "Rut 100k");
-        verify(mockBAD).save(ac.capture());
+        BankAccount.withDrawAccount(accountNumber, 50, "Rut 50k");
+        verify(mockBAD, times(2)).save(ac.capture());
         assertEquals(ac.getValue().getAccountNumber(), accountNumber);
-        assertEquals(ac.getValue().getBalace(), 50);
+        assertEquals(ac.getValue().getBalace(), 50.0 ,0.01);
     }
 }

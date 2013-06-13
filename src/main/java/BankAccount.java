@@ -24,16 +24,20 @@ public class BankAccount {
         return bankAccountDAO.getAccount(accountNumber);  //To change body of created methods use File | Settings | File Templates.
     }
 
-    public static BankAccountDTO depositAccount(String accountNumber, double amount, String des) {
+    public static void depositAccount(String accountNumber, double amount, String des) {
+        transactionCenter(accountNumber,amount,des);
+        //To change body of created methods use File | Settings | File Templates.
+    }
+
+    public static void withDrawAccount(String accountNumber, double amount, String des) {
+        transactionCenter(accountNumber,-amount,des);
+        //To change body of created methods use File | Settings | File Templates.
+    }
+    public static BankAccountDTO transactionCenter(String accountNumber, double amount, String des){
         BankAccountDTO account = BankAccount.getAccountNumber(accountNumber);
         account.setBalance(amount);
         Transaction.createTransactionDTO(accountNumber,amount,des);
         bankAccountDAO.save(account);
         return account;
-        //To change body of created methods use File | Settings | File Templates.
-    }
-
-    public static void withDrawAccount(String accountNumber, double amount, String des) {
-        //To change body of created methods use File | Settings | File Templates.
     }
 }

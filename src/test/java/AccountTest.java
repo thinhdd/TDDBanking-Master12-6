@@ -26,7 +26,7 @@ public class AccountTest {
         BankAccount.openAccount(accountNumber);
         ArgumentCaptor<BankAccountDTO> ac = ArgumentCaptor.forClass(BankAccountDTO.class);
         verify(mockBAD).save(ac.capture());
-        assertEquals(ac.getValue().getBalace(),0.0, 0.1);
+        assertEquals(ac.getValue().getBalace(),100.0, 0.1);
         assertEquals(ac.getValue().getAccountNumber(), accountNumber);
     }
     @Test
@@ -38,7 +38,7 @@ public class AccountTest {
         BankAccountDTO accountResult = BankAccount.getAccountNumber(accountNumber);
         verify(mockBAD).getAccount(accountNumber);
         assertEquals(accountResult.getAccountNumber(), accountNumber);
-        assertEquals(accountResult.getBalace(), 0.0, 0.01);
+        assertEquals(accountResult.getBalace(), 100.0, 0.01);
     }
 
 }
