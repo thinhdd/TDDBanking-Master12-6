@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 
+import java.util.Calendar;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -22,6 +23,7 @@ public class TransactionTest {
     public void setUp()
     {
         reset(mockBAD);
+        reset(mockTD);
         BankAccount.setBankAccountDAO(mockBAD);
         Transaction.setTransactionDAO(mockTD);
     }
@@ -42,16 +44,19 @@ public class TransactionTest {
     @Test
     public void depositSaveDBCheckTimeStampTest()
     {
-        ArgumentCaptor<BankAccountDTO> ac = ArgumentCaptor.forClass(BankAccountDTO.class);
         ArgumentCaptor<TransactionDTO> act = ArgumentCaptor.forClass(TransactionDTO.class);
-        List<TransactionDTO> list = act.getAllValues();
+
         BankAccountDTO account = BankAccount.openAccount(accountNumber);
-        when(mockTD.getTimeStamp()).thenReturn(100l);
+        Calendar calendar = mock(Calendar.class);
+        TransactionDTO.setCalendar(calendar);
+        when(calendar.getTimeInMillis()).thenReturn(100000l);
+        when(mockBAD.getAccount(accountNumber)).thenReturn(account);
         BankAccount.depositAccount(accountNumber, 100, "Them 100k");
         verify(mockTD,times(1)).save(act.capture());
-        assertEquals(list.get(1).getAccountNumber(), accountNumber);
-        assertEquals(list.get(1).getBalance(),100);
-        assertEquals(list.get(1).getDescriber(),"Them 100k");
-        assertEquals(list.get(1).getTimeStamp(), 100l);
+        List<TransactionDTO> list = act.getAllValues();
+        assertEquals(act.getValue().getAccountNumber(), accountNumber);
+        assertEquals(act.getValue().getBalance(),100.0);
+        assertEquals(act.getValue().getDescriber(),"Them 100k");
+        assertEquals(act.getValue().getTimeStamp(), 100000l);
     }
 }

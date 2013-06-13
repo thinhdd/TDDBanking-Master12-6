@@ -1,3 +1,5 @@
+import java.util.Calendar;
+
 /**
  * Created with IntelliJ IDEA.
  * User: thinhdd
@@ -6,19 +8,37 @@
  * To change this template use File | Settings | File Templates.
  */
 public class TransactionDTO {
-    public String getAccountNumber() {
-        return null;  //To change body of created methods use File | Settings | File Templates.
+    String accountNumber;
+    double amount;
+    String des;
+    long  timeStamp;
+    static Calendar calendar= Calendar.getInstance();
+    TransactionDTO(String accountNumber, double amount, String des) {
+        this.accountNumber=accountNumber;
+        this.amount=amount;
+        this.des=des;
+        timeStamp= calendar.getTimeInMillis();
+        //To change body of created methods use File | Settings | File Templates.
     }
 
-    public int getBalance() {
-        return 0;  //To change body of created methods use File | Settings | File Templates.
+    public String getAccountNumber() {
+        return accountNumber;  //To change body of created methods use File | Settings | File Templates.
+    }
+
+    public double getBalance() {
+        return amount;  //To change body of created methods use File | Settings | File Templates.
     }
 
     public String getDescriber() {
-        return null;  //To change body of created methods use File | Settings | File Templates.
+        return des;  //To change body of created methods use File | Settings | File Templates.
     }
 
     public long getTimeStamp() {
-        return 0;  //To change body of created methods use File | Settings | File Templates.
+        return timeStamp;  //To change body of created methods use File | Settings | File Templates.
+    }
+
+    public static void setCalendar(Calendar calendars) {
+        calendar=calendars;
+        //To change body of created methods use File | Settings | File Templates.
     }
 }
