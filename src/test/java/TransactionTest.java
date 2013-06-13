@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 public class TransactionTest {
     public BankAccountDAO mockBAD = mock(BankAccountDAO.class);
     public TransactionDAO mockTD = mock(TransactionDAO.class);
-    public String accountNumber;
+    public String accountNumber="123456";
     @Before
     public void setUp()
     {
@@ -85,15 +85,12 @@ public class TransactionTest {
         verify(mockTD,times(1)).save(act.capture());
         List<TransactionDTO> list = act.getAllValues();
         assertEquals(list.get(0).getAccountNumber(), accountNumber);
-        assertEquals(list.get(0).getBalance(),100.0);
+        assertEquals(list.get(0).getBalance(), 100.0);
         assertEquals(list.get(0).getDescriber(),"Rut 100k");
         assertEquals(list.get(0).getTimeStamp(), 100000l);
     }
-    @Test
-    public void getListTransactionOneAccountTest()
+    public void transactionCreate()
     {
-        ArgumentCaptor<TransactionDTO> act = ArgumentCaptor.forClass(TransactionDTO.class);
-
         BankAccountDTO account = BankAccount.openAccount(accountNumber);
         Calendar calendar = mock(Calendar.class);
         TransactionDTO.setCalendar(calendar);
@@ -102,15 +99,21 @@ public class TransactionTest {
         BankAccount.withDrawAccount(accountNumber, 100, "Rut 100k");
         BankAccount.depositAccount(accountNumber, 100, "Them 100k");
         BankAccount.withDrawAccount(accountNumber, 100, "Rut 100k");
-
+    }
+    @Test
+    public void getListTransactionOneAccountTest()
+    {
+        ArgumentCaptor<TransactionDTO> act = ArgumentCaptor.forClass(TransactionDTO.class);
+        transactionCreate();
         verify(mockTD,times(3)).save(act.capture());
         List<TransactionDTO> list = act.getAllValues();
         when(mockTD.getListTransaction(accountNumber)).thenReturn(list);
         List<TransactionDTO> listDB= BankAccount.getListTransaction(accountNumber);
         //-----------Check Transaction 1-------------
         assertTrue(list.get(0).equals(listDB.get(0)));
+        //-----------Check Transaction 1-------------
         assertTrue(list.get(1).equals(listDB.get(1)));
+        //-----------Check Transaction 1-------------
         assertTrue(list.get(2).equals(listDB.get(2)));
-
     }
 }

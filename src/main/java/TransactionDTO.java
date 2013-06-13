@@ -11,19 +11,19 @@ public class TransactionDTO {
     String accountNumber;
     double amount;
     String des;
-    long  timeStamp;
-    boolean state=true;
-    static Calendar calendar= Calendar.getInstance();
+    long timeStamp;
+    boolean state = true;
+    static Calendar calendar = Calendar.getInstance();
+
     TransactionDTO(String accountNumber, double amount, String des) {
-        this.accountNumber=accountNumber;
-        if(amount<0){
-            this.state=false;
-            this.amount=-amount;
-        }
-        else
-            this.amount=amount;
-        this.des=des;
-        timeStamp= calendar.getTimeInMillis();
+        this.accountNumber = accountNumber;
+        if (amount < 0) {
+            this.state = false;
+            this.amount = -amount;
+        } else
+            this.amount = amount;
+        this.des = des;
+        timeStamp = calendar.getTimeInMillis();
         //To change body of created methods use File | Settings | File Templates.
     }
 
@@ -44,12 +44,7 @@ public class TransactionDTO {
     }
 
     public static void setCalendar(Calendar calendars) {
-        calendar=calendars;
+        calendar = calendars;
         //To change body of created methods use File | Settings | File Templates.
-    }
-    public boolean equals(Object otherTransaction) {
-        TransactionDTO other = (TransactionDTO)otherTransaction;
-        return accountNumber.equals(other.accountNumber) && ((amount - other.amount) == 0) && des.equals(other.des) && (timeStamp==other.timeStamp)
-                && (state && other.state);
     }
 }
