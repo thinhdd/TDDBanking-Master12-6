@@ -12,10 +12,16 @@ public class TransactionDTO {
     double amount;
     String des;
     long  timeStamp;
+    boolean state=true;
     static Calendar calendar= Calendar.getInstance();
     TransactionDTO(String accountNumber, double amount, String des) {
         this.accountNumber=accountNumber;
-        this.amount=amount;
+        if(amount<0){
+            this.state=false;
+            this.amount=-amount;
+        }
+        else
+            this.amount=amount;
         this.des=des;
         timeStamp= calendar.getTimeInMillis();
         //To change body of created methods use File | Settings | File Templates.

@@ -54,10 +54,10 @@ public class TransactionTest {
         BankAccount.depositAccount(accountNumber, 100, "Them 100k");
         verify(mockTD,times(1)).save(act.capture());
         List<TransactionDTO> list = act.getAllValues();
-        assertEquals(act.getValue().getAccountNumber(), accountNumber);
-        assertEquals(act.getValue().getBalance(),100.0);
-        assertEquals(act.getValue().getDescriber(),"Them 100k");
-        assertEquals(act.getValue().getTimeStamp(), 100000l);
+        assertEquals(list.get(0).getAccountNumber(), accountNumber);
+        assertEquals(list.get(0).getBalance(),100.0);
+        assertEquals(list.get(0).getDescriber(),"Them 100k");
+        assertEquals(list.get(0).getTimeStamp(), 100000l);
     }
     @Test
     public void withDrawBalanceTest()
@@ -83,9 +83,9 @@ public class TransactionTest {
         BankAccount.withDrawAccount(accountNumber, 100, "Rut 100k");
         verify(mockTD,times(1)).save(act.capture());
         List<TransactionDTO> list = act.getAllValues();
-        assertEquals(act.getValue().getAccountNumber(), accountNumber);
-        assertEquals(act.getValue().getBalance(),0.0);
-        assertEquals(act.getValue().getDescriber(),"Rut 100k");
-        assertEquals(act.getValue().getTimeStamp(), 100000l);
+        assertEquals(list.get(0).getAccountNumber(), accountNumber);
+        assertEquals(list.get(0).getBalance(),100.0);
+        assertEquals(list.get(0).getDescriber(),"Rut 100k");
+        assertEquals(list.get(0).getTimeStamp(), 100000l);
     }
 }
