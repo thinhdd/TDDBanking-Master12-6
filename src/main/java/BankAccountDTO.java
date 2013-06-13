@@ -16,7 +16,7 @@ public class BankAccountDTO {
     }
 
     public void setBalance(double balance) {
-        this.balance = this.balance+ balance ;
+        this.balance = this.balance + balance ;
     }
 
     public String getAccountNumber() {

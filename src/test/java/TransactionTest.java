@@ -60,7 +60,7 @@ public class TransactionTest {
         assertEquals(act.getValue().getTimeStamp(), 100000l);
     }
     @Test
-    public void withDraw()
+    public void withDrawBalanceTest()
     {
         ArgumentCaptor<BankAccountDTO> ac = ArgumentCaptor.forClass(BankAccountDTO.class);
         BankAccountDTO account = BankAccount.openAccount(accountNumber);
@@ -69,5 +69,23 @@ public class TransactionTest {
         verify(mockBAD, times(2)).save(ac.capture());
         assertEquals(ac.getValue().getAccountNumber(), accountNumber);
         assertEquals(ac.getValue().getBalace(), 50.0 ,0.01);
+    }
+    @Test
+    public void withcDrawTransactionTest()
+    {
+        ArgumentCaptor<TransactionDTO> act = ArgumentCaptor.forClass(TransactionDTO.class);
+
+        BankAccountDTO account = BankAccount.openAccount(accountNumber);
+        Calendar calendar = mock(Calendar.class);
+        TransactionDTO.setCalendar(calendar);
+        when(calendar.getTimeInMillis()).thenReturn(100000l);
+        when(mockBAD.getAccount(accountNumber)).thenReturn(account);
+        BankAccount.withDrawAccount(accountNumber, 100, "Rut 100k");
+        verify(mockTD,times(1)).save(act.capture());
+        List<TransactionDTO> list = act.getAllValues();
+        assertEquals(act.getValue().getAccountNumber(), accountNumber);
+        assertEquals(act.getValue().getBalance(),0.0);
+        assertEquals(act.getValue().getDescriber(),"Rut 100k");
+        assertEquals(act.getValue().getTimeStamp(), 100000l);
     }
 }
